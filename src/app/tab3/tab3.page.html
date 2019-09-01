@@ -46,9 +46,8 @@
       <ion-input focused="focused" type="number" placeholder="ICI"></ion-input>
     </ion-item>
     
-    <ion-item>
-      <ion-button>Confirmer commande <ion-icon slot="end" name="cash"></ion-icon></ion-button>
-    </ion-item>
+    <br>
+    <ion-button class="ion-text-capitalize" block color="primary"> Confirmer commande <ion-icon slot="end" name="checkmark-circle"></ion-icon>  </ion-button>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -63,7 +62,7 @@
   <h1>Ton panier est vide</h1>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
+      <ion-fab-button routerLink="/signup" color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
       <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
       <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
   </ion-fab> 

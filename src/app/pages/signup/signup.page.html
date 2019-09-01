@@ -1,9 +1,59 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>signup</ion-title>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+      </ion-buttons>
+    <ion-title>Rejoindre FineFood</ion-title>
   </ion-toolbar>
 </ion-header>
-
+  
 <ion-content>
+  <div id="bg"></div>
+  <ion-card id="signUp-form">
+    <ion-card-header>
+      <ion-card-title>Identifiez-vous</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+            <ion-item>
+              <ion-label position="floating">Nom <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input required formControlName="lastName" type="text"> </ion-input>
+              <ion-icon slot="end" name="person"></ion-icon> 
+            </ion-item>
 
+            <ion-item>
+              <ion-label position="floating">Prénom<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input required formControlName="firstName" type="text"></ion-input>
+              <ion-icon slot="end" name="person"></ion-icon> 
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Téléphone<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input required formControlName="phoneNumber" type="number"></ion-input>
+              <ion-icon slot="end" name="call"></ion-icon> 
+            </ion-item>
+
+            <br>
+
+            <ion-item>
+              <ion-card-subtitle>Choisis un mot de passe robuste pour ton compte</ion-card-subtitle>
+              <ion-label position="floating">Votre nouveau mdp<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input required formControlName="password" type="text"></ion-input>
+              <ion-icon slot="end" name="lock"></ion-icon> 
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="floating">Confirme ton nouveau mdp<ion-text color="danger">*</ion-text></ion-label>
+              <ion-input required formControlName="passwordConfirm" type="text"></ion-input>
+              <ion-icon slot="end" name="lock"></ion-icon> 
+            </ion-item>
+
+            <br>
+            <ion-button block color="primary" type="submit" [disabled]="signUpForm.invalid"> Rejoindre <ion-icon slot="end" name="happy"></ion-icon> </ion-button>
+          </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+  

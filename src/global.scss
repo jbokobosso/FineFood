@@ -24,3 +24,29 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+#bg {
+    height: 100%;
+    background: center url("assets/images/bg.jpg") no-repeat ;
+    filter: blur(4px);
+}
+
+#login-form, #signUp-form {
+    background-color: white;
+}
+
+#login-form {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    margin: auto;
+}
+
+#signUp-form {
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    margin: auto;
+}
