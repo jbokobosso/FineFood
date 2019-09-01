@@ -35,10 +35,10 @@
       </ion-card-content>
     </ion-card>
 
-  <ion-list>    
-    <ion-item (click)=onShowCodePromo()>
-      <ion-checkbox color="primary"></ion-checkbox>
+  <ion-list>
+    <ion-item (click)="onShowCodePromo()">
       <ion-label>J'ai un code promo</ion-label>
+      <ion-checkbox slot="start"></ion-checkbox>
     </ion-item>
 
     <ion-item *ngIf="codePromo">
@@ -47,11 +47,13 @@
     </ion-item>
     
     <br>
-    <ion-button class="ion-text-capitalize" block color="primary"> Confirmer commande <ion-icon slot="end" name="checkmark-circle"></ion-icon>  </ion-button>
+    <ion-button routerLink="/bill" class="ion-text-capitalize" block color="primary">
+      Confirmer commande <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+    </ion-button>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
+      <ion-fab-button routerLink="/signup" color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
       <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
       <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
   </ion-fab> 
