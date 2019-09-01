@@ -1,9 +1,27 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
-      Tab Two
+      Nos plats
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content class="ion-padding">
+    <ion-card *ngFor="let dish of dishes">
+        <ion-img src="../../assets/images/riz-gras.jpeg"></ion-img>
+        <ion-card-header>
+          <ion-card-title>{{dish.name}}</ion-card-title>
+          <ion-card-subtitle>{{dish.price}} Francs CFA</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab facilis praesentium iste commodi laudantium? Nam quam eum, nostrum porro, adipisci aliquam corporis ut ad consequatur corrupti aliquid eaque nihil perferendis!
+          </p>
+          <ion-row>
+            <ion-col pull="-5">
+                <ion-button>Commander <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+</ion-content>

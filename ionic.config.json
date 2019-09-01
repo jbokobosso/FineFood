@@ -1,5 +1,7 @@
 {
   "name": "FineFoods",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

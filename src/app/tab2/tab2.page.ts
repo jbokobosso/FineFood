@@ -7,6 +7,14 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
+  dishes: object[] = [
+    {name: 'Riz au gras', price: 700},
+    {name: 'Pizza mozarella', price: 500},
+    {name: 'Pizza africain', price: 500},
+    {name: 'Frites au poulet', price: 500},
+    {name: 'Riz contonnais', price: 500},
+  ];
+
   constructor() {}
 
 }
