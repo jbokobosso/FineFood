@@ -51,8 +51,20 @@
     </ion-item>
   </ion-list>
 
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
+      <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
+      <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
+  </ion-fab> 
+
 </ion-content>
 
 <ion-content padding *ngIf="dishesIsEmpty()">
   <h1>Ton panier est vide</h1>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
+      <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
+      <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
+  </ion-fab> 
 </ion-content>

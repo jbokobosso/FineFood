@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FabService } from '../services/fab.service';
 
 @Component({
   selector: 'app-tab2',
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
+
+  private toggled = false;
+  private default = 'add';
 
   dishes: object[] = [
     {name: 'Riz au gras', price: 700},
@@ -15,6 +19,12 @@ export class Tab2Page {
     {name: 'Riz contonnais', price: 500},
   ];
 
-  constructor() {}
+  constructor(private fab_service: FabService) {}
+
+  onFab() {
+    this.fab_service.onFabClicked();
+    this.default = this.fab_service.getDefault();
+    this.toggled = this.fab_service.getToggled();
+  }
 
 }

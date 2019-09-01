@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FabService } from '../services/fab.service';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +8,9 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
+  private toggled = false;
+  private default = 'add';
+
   codePromo = false;
 
   dishes: object[] = [
@@ -14,7 +18,13 @@ export class Tab3Page {
     {name: 'Spaghétthi blanc', price: 500}
   ];
 
-  constructor() {}
+  constructor(private fab_service: FabService) {}
+
+  onFab() {
+    this.fab_service.onFabClicked();
+    this.default = this.fab_service.getDefault();
+    this.toggled = this.fab_service.getToggled();
+  }
 
   onDeletePanierElement(i) {
     this.dishes.splice(this.dishes.indexOf(i), 1);
