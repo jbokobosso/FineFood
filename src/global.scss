@@ -31,7 +31,7 @@
     filter: blur(4px);
 }
 
-#login-form, #signUp-form {
+#login-form, #signUp-form, .bg-content {
     background-color: white;
 }
 
@@ -43,7 +43,7 @@
     margin: auto;
 }
 
-#signUp-form {
+.bg-content {
     position: absolute;
     top: 5%;
     left: 10%;

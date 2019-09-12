@@ -28,7 +28,7 @@ export class Tab3Page {
 
   onDeletePanierElement(i) {
     this.dishes.splice(this.dishes.indexOf(i), 1);
-    console.log(this.dishes);
+    // console.log(this.dishes);
   }
 
   onShowCodePromo() {

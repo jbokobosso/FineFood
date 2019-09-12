@@ -34,22 +34,22 @@
               </ion-item>
             </ion-item-group>    
 
-            <ion-item-group>
+            <!-- <ion-item-group>
               <ion-item-divider>
                 <ion-label>Moyen de paiement</ion-label>
               </ion-item-divider>
               <ion-item>
                   <ion-label>Choisissez: </ion-label>
-                  <select formControlName="paymentMethod">
-                    <option value="flooz">Flooz</option>
-                    <option value="tmoney">Tmoney</option>
-                  </select>
+                  <ion-select formControlName="paymentMethod">
+                    <ion-select-option value="flooz">Flooz</ion-select-option>
+                    <ion-select-option value="tmoney">Tmoney</ion-select-option>
+                  </ion-select>
               </ion-item>
               <ion-item>
                 <ion-label>Numéro de téléphone</ion-label>
                 <ion-input formControlName="transactionNumber" type="number"></ion-input>
               </ion-item>
-            </ion-item-group>
+            </ion-item-group> -->
     
             <ion-button block color="primary" type="submit" [disabled]="deliveryForm.invalid">
               Procéder
