@@ -3,6 +3,7 @@ import { MenuController } from '@ionic/angular';
 import { FabService } from '../services/fab.service';
 import { ApiService } from '../services/api.service';
 import { Subscription, Observable } from 'rxjs';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-tab1',
@@ -13,13 +14,15 @@ export class Tab1Page implements OnInit {
   
   private toggled = false;
   private default = 'add';
+  private dishes_image_address;
 
   private dishes:Observable<any>;
 
-  constructor(private menu: MenuController, private fab_service: FabService, private api:ApiService) {}
+  constructor(private menu: MenuController, private fab_service: FabService, private api:ApiService, private config:ConfigService) {}
 
   ngOnInit() {
-    this.getDishesList()
+    this.getDishesList();
+    this.dishes_image_address = this.config.getDishesImageAddress();
   }
 
   onFab() {
