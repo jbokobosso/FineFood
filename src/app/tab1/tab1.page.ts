@@ -15,6 +15,8 @@ export class Tab1Page implements OnInit {
   private toggled = false;
   private default = 'add';
   private dishes_image_address;
+  private panier:number[] = [];
+  private commander:boolean = false;
 
   private dishes:Observable<any>;
 
@@ -33,6 +35,16 @@ export class Tab1Page implements OnInit {
 
   getDishesList() {
     this.dishes = this.api.getMenu();
+  }
+
+  addToCart(dish_id:number) {
+    this.api.addDishToCart(dish_id)
+    // This should be replaced by a toast notification saying: "Dish added to cart !!!"
+    this.commander = !this.commander
+  }
+  
+  onCommander() {
+    this.commander = !this.commander
   }
 
 }

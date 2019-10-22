@@ -1,24 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FabService } from '../services/fab.service';
+import { ApiService } from '../services/api.service';
+import { Observable } from 'rxjs';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
 
+export class Tab3Page implements OnInit {
+  
   private toggled = false;
   private default = 'add';
+  private dishes_in_cart_indexes:number[] = [];
+  private dishes:any[] = [];
+  private dishes_image_address;
 
   codePromo = false;
 
-  dishes: object[] = [
-    {name: 'Riz Gras', price: 700},
-    {name: 'Spaghétthi blanc', price: 500}
-  ];
 
-  constructor(private fab_service: FabService) {}
+  constructor(private fab_service: FabService, private api:ApiService, private config:ConfigService) {}
+
+  ngOnInit() {
+    this.dishes_in_cart_indexes = this.api.getDishesInCart()
+    this.dishes_image_address = this.config.getDishesImageAddress();
+    
+    this.dishes = this.api.getDishesInCart()
+  }
 
   onFab() {
     this.fab_service.onFabClicked();
@@ -28,7 +38,7 @@ export class Tab3Page {
 
   onDeletePanierElement(i) {
     this.dishes.splice(this.dishes.indexOf(i), 1);
-    // console.log(this.dishes);
+    this.api.emitCartLength();
   }
 
   onShowCodePromo() {

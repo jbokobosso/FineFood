@@ -9,20 +9,20 @@
 <ion-content padding *ngIf="!dishesIsEmpty()">
 
     <ion-card *ngFor="let dish of dishes; let i=index" [attr.data-index]="i">
-      <ion-img src="../../assets/images/riz-gras.jpeg"></ion-img>
+      <ion-img src="{{dishes_image_address}}/{{dish.image}}"></ion-img>
       <ion-card-header>
-        <ion-card-title> {{dish.name}} </ion-card-title>
+        <ion-card-title> {{dish.nom}} </ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
         <ion-item>
           <ion-label>Prix: </ion-label>
-          <ion-item>{{dish.price}} CFA</ion-item>
+          <ion-item>{{dish.prix }} CFA</ion-item>
         </ion-item>
 
         <ion-item>
           <ion-label>Quantité: </ion-label>
-          <ion-input type="number"></ion-input>
+          <ion-input [value]="dish.qte" type="number"></ion-input>
         </ion-item>
 
         <ion-row>
