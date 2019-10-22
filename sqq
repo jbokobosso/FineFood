@@ -1,0 +1,205 @@
+     1	/*
+     2	       Licensed to the Apache Software Foundation (ASF) under one
+     3	       or more contributor license agreements.  See the NOTICE file
+     4	       distributed with this work for additional information
+     5	       regarding copyright ownership.  The ASF licenses this file
+     6	       to you under the Apache License, Version 2.0 (the
+     7	       "License"); you may not use this file except in compliance
+     8	       with the License.  You may obtain a copy of the License at
+     9	
+    10	         http://www.apache.org/licenses/LICENSE-2.0
+    11	
+    12	       Unless required by applicable law or agreed to in writing,
+    13	       software distributed under the License is distributed on an
+    14	       "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    15	       KIND, either express or implied.  See the License for the
+    16	       specific language governing permissions and limitations
+    17	       under the License.
+    18	*/
+    19	
+    20	import java.util.regex.Pattern
+    21	import groovy.swing.SwingBuilder
+    22	
+    23	String doEnsureValueExists(filePath, props, key) {
+    24	    if (props.get(key) == null) {
+    25	        throw new GradleException(filePath + ': Missing key required "' + key + '"')
+    26	    }
+    27	    return props.get(key)
+    28	}
+    29	
+    30	String doGetProjectTarget() {
+    31	    def props = new Properties()
+    32	    def propertiesFile = 'project.properties';
+    33	    if(!(file(propertiesFile).exists())) {
+    34	      propertiesFile = '../project.properties';
+    35	    }
+    36	    file(propertiesFile).withReader { reader ->
+    37	        props.load(reader)
+    38	    }
+    39	    return doEnsureValueExists('project.properties', props, 'target')
+    40	}
+    41	
+    42	String[] getAvailableBuildTools() {
+    43	    def buildToolsDir = new File(getAndroidSdkDir(), "build-tools")
+    44	    buildToolsDir.list()
+    45	        .findAll { it ==~ /[0-9.]+/ }
+    46	        .sort { a, b -> compareVersions(b, a) }
+    47	}
+    48	
+    49	String doFindLatestInstalledBuildTools(String minBuildToolsVersion) {
+    50	    def availableBuildToolsVersions
+    51	    try {
+    52	        availableBuildToolsVersions = getAvailableBuildTools()
+    53	    } catch (e) {
+    54	        println "An exception occurred while trying to find the Android build tools."
+    55	        throw e
+    56	    }
+    57	    if (availableBuildToolsVersions.length > 0) {
+    58	        def highestBuildToolsVersion = availableBuildToolsVersions[0]
+    59	        if (compareVersions(highestBuildToolsVersion, minBuildToolsVersion) < 0) {
+    60	            throw new RuntimeException(
+    61	                "No usable Android build tools found. Highest installed version is " +
+    62	                highestBuildToolsVersion + "; minimum version required is " +
+    63	                minBuildToolsVersion + ".")
+    64	        }
+    65	        highestBuildToolsVersion
+    66	    } else {
+    67	        throw new RuntimeException(
+    68	            "No installed build tools found. Install the Android build tools version " +
+    69	            minBuildToolsVersion + " or higher.")
+    70	    }
+    71	}
+    72	
+    73	// Return the first non-zero result of subtracting version list elements
+    74	// pairwise. If they are all identical, return the difference in length of
+    75	// the two lists.
+    76	int compareVersionList(Collection aParts, Collection bParts) {
+    77	    def pairs = ([aParts, bParts]).transpose()
+    78	    pairs.findResult(aParts.size()-bParts.size()) {it[0] - it[1] != 0 ? it[0] - it[1] : null}
+    79	}
+    80	
+    81	// Compare two version strings, such as "19.0.0" and "18.1.1.0". If all matched
+    82	// elements are identical, the longer version is the largest by this method.
+    83	// Examples:
+    84	//   "19.0.0" > "19"
+    85	//   "19.0.1" > "19.0.0"
+    86	//   "19.1.0" > "19.0.1"
+    87	//   "19" > "18.999.999"
+    88	int compareVersions(String a, String b) {
+    89	    def aParts = a.tokenize('.').collect {it.toInteger()}
+    90	    def bParts = b.tokenize('.').collect {it.toInteger()}
+    91	    compareVersionList(aParts, bParts)
+    92	}
+    93	
+    94	String getAndroidSdkDir() {
+    95	    def rootDir = project.rootDir
+    96	    def androidSdkDir = null
+    97	    String envVar = System.getenv("ANDROID_HOME")
+    98	    def localProperties = new File(rootDir, 'local.properties')
+    99	    String systemProperty = System.getProperty("android.home")
+   100	    if (envVar != null) {
+   101	        androidSdkDir = envVar
+   102	    } else if (localProperties.exists()) {
+   103	        Properties properties = new Properties()
+   104	        localProperties.withInputStream { instr ->
+   105	            properties.load(instr)
+   106	        }
+   107	        def sdkDirProp = properties.getProperty('sdk.dir')
+   108	        if (sdkDirProp != null) {
+   109	            androidSdkDir = sdkDirProp
+   110	        } else {
+   111	            sdkDirProp = properties.getProperty('android.dir')
+   112	            if (sdkDirProp != null) {
+   113	                androidSdkDir = (new File(rootDir, sdkDirProp)).getAbsolutePath()
+   114	            }
+   115	        }
+   116	    }
+   117	    if (androidSdkDir == null && systemProperty != null) {
+   118	        androidSdkDir = systemProperty
+   119	    }
+   120	    if (androidSdkDir == null) {
+   121	        throw new RuntimeException(
+   122	            "Unable to determine Android SDK directory.")
+   123	    }
+   124	    androidSdkDir
+   125	}
+   126	
+   127	def doExtractIntFromManifest(name) {
+   128	    def manifestFile = file(android.sourceSets.main.manifest.srcFile)
+   129	    def pattern = Pattern.compile(name + "=\"(\\d+)\"")
+   130	    def matcher = pattern.matcher(manifestFile.getText())
+   131	    matcher.find()
+   132	    return new BigInteger(matcher.group(1))
+   133	}
+   134	
+   135	def doExtractStringFromManifest(name) {
+   136	    def manifestFile = file(android.sourceSets.main.manifest.srcFile)
+   137	    def pattern = Pattern.compile(name + "=\"(\\S+)\"")
+   138	    def matcher = pattern.matcher(manifestFile.getText())
+   139	    matcher.find()
+   140	    return matcher.group(1)
+   141	}
+   142	
+   143	def doPromptForPassword(msg) {
+   144	    if (System.console() == null) {
+   145	        def ret = null
+   146	        new SwingBuilder().edt {
+   147	            dialog(modal: true, title: 'Enter password', alwaysOnTop: true, resizable: false, locationRelativeTo: null, pack: true, show: true) {
+   148	                vbox {
+   149	                    label(text: msg)
+   150	                    def input = passwordField()
+   151	                    button(defaultButton: true, text: 'OK', actionPerformed: {
+   152	                        ret = input.password;
+   153	                        dispose();
+   154	                    })
+   155	                }
+   156	            }
+   157	        }
+   158	        if (!ret) {
+   159	            throw new GradleException('User canceled build')
+   160	        }
+   161	        return new String(ret)
+   162	    } else {
+   163	        return System.console().readPassword('\n' + msg);
+   164	    }
+   165	}
+   166	
+   167	def doGetConfigXml() {
+   168	    def xml = file("src/main/res/xml/config.xml").getText()
+   169	    // Disable namespace awareness since Cordova doesn't use them properly
+   170	    return new XmlParser(false, false).parseText(xml)
+   171	}
+   172	
+   173	def doGetConfigPreference(name, defaultValue) {
+   174	    name = name.toLowerCase()
+   175	    def root = doGetConfigXml()
+   176	
+   177	    def ret = defaultValue
+   178	    root.preference.each { it ->
+   179	        def attrName = it.attribute("name")
+   180	        if (attrName && attrName.toLowerCase() == name) {
+   181	            ret = it.attribute("value")
+   182	        }
+   183	    }
+   184	    return ret
+   185	}
+   186	
+   187	// Properties exported here are visible to all plugins.
+   188	ext {
+   189	    // These helpers are shared, but are not guaranteed to be stable / unchanged.
+   190	    privateHelpers = {}
+   191	    privateHelpers.getProjectTarget = { doGetProjectTarget() }
+   192	    privateHelpers.findLatestInstalledBuildTools = { doFindLatestInstalledBuildTools('19.1.0') }
+   193	    privateHelpers.extractIntFromManifest = { name -> doExtractIntFromManifest(name) }
+   194	    privateHelpers.extractStringFromManifest = { name -> doExtractStringFromManifest(name) }
+   195	    privateHelpers.promptForPassword = { msg -> doPromptForPassword(msg) }
+   196	    privateHelpers.ensureValueExists = { filePath, props, key -> doEnsureValueExists(filePath, props, key) }
+   197	
+   198	    // These helpers can be used by plugins / projects and will not change.
+   199	    cdvHelpers = {}
+   200	    // Returns a XmlParser for the config.xml. Added in 4.1.0.
+   201	    cdvHelpers.getConfigXml = { doGetConfigXml() }
+   202	    // Returns the value for the desired <preference>. Added in 4.1.0.
+   203	    cdvHelpers.getConfigPreference = { name, defaultValue -> doGetConfigPreference(name, defaultValue) }
+   204	}
+   205	
