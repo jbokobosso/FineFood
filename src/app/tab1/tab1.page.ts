@@ -4,6 +4,7 @@ import { FabService } from '../services/fab.service';
 import { ApiService } from '../services/api.service';
 import { Subscription, Observable } from 'rxjs';
 import { ConfigService } from '../services/config.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tab1',
@@ -17,6 +18,7 @@ export class Tab1Page implements OnInit {
   private dishes_image_address;
   private panier:number[] = [];
   private commander:boolean = false;
+  private qte:FormControl;
 
   private dishes:Observable<any>;
 
@@ -25,6 +27,12 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.getDishesList();
     this.dishes_image_address = this.config.getDishesImageAddress();
+
+    this.initForm();
+  }
+
+  initForm() {
+    this.qte = new FormControl('', Validators.required)
   }
 
   onFab() {
@@ -38,8 +46,8 @@ export class Tab1Page implements OnInit {
   }
 
   addToCart(dish_id:number) {
-    this.api.addDishToCart(dish_id)
-    // This should be replaced by a toast notification saying: "Dish added to cart !!!"
+    this.api.addDishToCart(dish_id, this.qte.value)
+    // Change this message into a toast notification saying: "Dish added to cart !!!"
     this.commander = !this.commander
   }
   

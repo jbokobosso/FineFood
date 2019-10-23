@@ -9,7 +9,6 @@
 <ion-content padding *ngIf="!dishesIsEmpty()">
 
     <ion-card *ngFor="let dish of dishes; let i=index" [attr.data-index]="i">
-      <ion-img src="{{dishes_image_address}}/{{dish.image}}"></ion-img>
       <ion-card-header>
         <ion-card-title> {{dish.nom}} </ion-card-title>
       </ion-card-header>

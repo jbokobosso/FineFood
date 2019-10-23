@@ -20,7 +20,7 @@
           <ion-button *ngIf="!commander" (click)="onCommander()">Commander <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
           <ion-item *ngIf="commander">
             <ion-label>Quantité: </ion-label>
-            <ion-input focused="focused" type="number" placeholder="x1, x2"></ion-input>
+            <ion-input [formControl]="qte" focused="focused" type="number" placeholder="x1, x2"></ion-input>
           </ion-item>
           <ion-button *ngIf="commander" (click)="addToCart(dish.id)">Valider <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
         </ion-card-content>

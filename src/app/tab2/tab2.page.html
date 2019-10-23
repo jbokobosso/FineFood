@@ -19,8 +19,13 @@
           </p>
           <ion-row>
             <ion-col pull="-5">
-                <ion-button>Commander <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
+                <ion-button *ngIf="!commander" (click)="onCommander()">Commander <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
             </ion-col>
+            <ion-item *ngIf="commander">
+              <ion-label>Quantité: </ion-label>
+              <ion-input [formControl]="qte" focused="focused" type="number" placeholder="x1, x2"></ion-input>
+            </ion-item>
+            <ion-button *ngIf="commander" (click)="addToCart(dish.id)">Valider <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
           </ion-row>
         </ion-card-content>
       </ion-card>
