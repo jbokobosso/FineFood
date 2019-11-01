@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { ToastController } from "@ionic/angular";
 
 export interface CartContent {
   id:number;
@@ -23,7 +24,10 @@ export class ApiService {
   cart_length_subject = new Subject<number>();
   private dishes_in_cart_subject = new Subject<any[]>();
 
-  constructor(private http:HttpClient, private config:ConfigService) { }
+  constructor(
+    private http:HttpClient, 
+    private config:ConfigService,
+    private toastController:ToastController) { }
 
   emitDishesInCart() {
     this.dishes_in_cart_subject.next(this.dishes_in_cart.slice())
@@ -54,11 +58,12 @@ export class ApiService {
           this.dishes_in_cart.push(received_dish) 
           this.emitDishesInCart()
           this.emitCartLength()
+          this.presentToast("Plat ajouté au panier", 3000, 'bottom')
         } else {
           received_dish.qte = dish_qte
           if (this.dishAlreadyInCart(this.dishes_in_cart, received_dish)) {
             this.changeDishQuantity(this.dishes_in_cart, received_dish.id, dish_qte)
-            console.log("Dish quantity changed successfully") // Change this message into a toast notification
+            this.presentToast("Quantité modifiée", 3000, 'bottom')
           } else {    
             received_dish.qte = dish_qte
             this.dishes_in_cart.push(received_dish) 
@@ -113,6 +118,16 @@ export class ApiService {
 
   promoExists(code_promo:string) {
     return this.http.get(this.config.getApiHostAddress()+"/code_promo_exists/"+ code_promo)
+  }
+
+  async presentToast(message:string, duration:number, pos:any, color:string='primary') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      position: pos,
+      color: color
+    });
+    toast.present();
   }
 
 }

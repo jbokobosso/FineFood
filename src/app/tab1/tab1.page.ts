@@ -22,7 +22,12 @@ export class Tab1Page implements OnInit {
 
   private dishes:Observable<any>;
 
-  constructor(private menu: MenuController, private fab_service: FabService, private api:ApiService, private config:ConfigService) {}
+  constructor(
+    private menu: MenuController, 
+    private fab_service: FabService, 
+    private api:ApiService, 
+    private config:ConfigService
+    ) {}
 
   ngOnInit() {
     this.getDishesList();
@@ -47,7 +52,6 @@ export class Tab1Page implements OnInit {
 
   addToCart(dish_id:number) {
     this.api.addDishToCart(dish_id, this.qte.value)
-    // Change this message into a toast notification saying: "Dish added to cart !!!"
     this.commander = !this.commander
   }
   

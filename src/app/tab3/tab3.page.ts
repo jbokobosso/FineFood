@@ -70,7 +70,7 @@ export class Tab3Page implements OnInit {
         if (server_response == true) {
           this.router.navigate(["/bill"])
         } else {
-          console.log("Code promo invalide")
+          this.api.presentToast("Code promo invalide", 2000, 'bottom')
         }
       }
     )
