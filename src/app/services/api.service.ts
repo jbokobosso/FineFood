@@ -111,4 +111,8 @@ export class ApiService {
     return this.dishes_in_cart
   }
 
+  promoExists(code_promo:string) {
+    return this.http.get(this.config.getApiHostAddress()+"/code_promo_exists/"+ code_promo)
+  }
+
 }

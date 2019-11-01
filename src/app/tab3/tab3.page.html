@@ -42,11 +42,14 @@
 
     <ion-item *ngIf="codePromo">
       <ion-label>Entrez code promo</ion-label>
-      <ion-input focused="focused" type="number" placeholder="ICI"></ion-input>
+      <ion-input [formControl]="code_promo" focused="focused" type="text" placeholder="ICI"></ion-input>
     </ion-item>
     
     <br>
-    <ion-button routerLink="/bill" class="ion-text-capitalize" block color="primary">
+    <ion-button 
+      class="ion-text-capitalize" 
+      block color="primary"
+      (click) = "onConfirmerCommande()">
       Confirmer commande <ion-icon slot="end" name="checkmark-circle"></ion-icon>
     </ion-button>
   </ion-list>

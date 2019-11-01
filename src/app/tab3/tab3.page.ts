@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FabService } from '../services/fab.service';
-import { ApiService } from '../services/api.service';
-import { Observable } from 'rxjs';
+import { ApiService, CartContent } from '../services/api.service';
 import { ConfigService } from '../services/config.service';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -12,22 +13,32 @@ import { ConfigService } from '../services/config.service';
 
 export class Tab3Page implements OnInit {
   
+  private bill_total:number = null;
+
   private toggled = false;
   private default = 'add';
-  private dishes_in_cart_indexes:number[] = [];
+  private dishes_in_cart_indexes:CartContent[] = [];
   private dishes:any[] = [];
   private dishes_image_address;
+  private codePromo = false;
+  private code_promo:FormControl;
 
-  codePromo = false;
 
-
-  constructor(private fab_service: FabService, private api:ApiService, private config:ConfigService) {}
+  constructor(
+    private fab_service: FabService, 
+    private api:ApiService, 
+    private config:ConfigService,
+    private router: Router) {}
 
   ngOnInit() {
+    this.initForm()
     this.dishes_in_cart_indexes = this.api.getDishesInCart()
-    this.dishes_image_address = this.config.getDishesImageAddress();
-    
+    this.dishes_image_address = this.config.getDishesImageAddress()    
     this.dishes = this.api.getDishesInCart()
+  }
+
+  initForm() {
+    this.code_promo = new FormControl('')
   }
 
   onFab() {
@@ -51,6 +62,18 @@ export class Tab3Page implements OnInit {
     } else {
       return false;
     }
+  }
+
+  onConfirmerCommande() {
+    this.api.promoExists(this.code_promo.value).subscribe(
+      (server_response) => {
+        if (server_response == true) {
+          this.router.navigate(["/bill"])
+        } else {
+          console.log("Code promo invalide")
+        }
+      }
+    )
   }
 
 }
