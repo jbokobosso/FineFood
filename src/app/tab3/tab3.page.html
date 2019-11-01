@@ -64,7 +64,8 @@
 </ion-content>
 
 <ion-content padding *ngIf="dishesIsEmpty()">
-  <h1>Ton panier est vide</h1>
+  <h1 class="ion-text-center cart-title">Ton panier est vide</h1>
+  <ion-img src="../../assets/images/panier.png"></ion-img>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button routerLink="/wallet" color="secondary" *ngIf="toggled"> <ion-icon name="wallet"></ion-icon> </ion-fab-button>
