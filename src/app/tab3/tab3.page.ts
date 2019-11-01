@@ -12,9 +12,8 @@ import { Router } from '@angular/router';
 })
 
 export class Tab3Page implements OnInit {
-  
-  private bill_total:number = null;
 
+  private cart_bill:number = 0;
   private toggled = false;
   private default = 'add';
   private dishes_in_cart_indexes:CartContent[] = [];
@@ -64,16 +63,33 @@ export class Tab3Page implements OnInit {
     }
   }
 
+  // onConfirmerCommande() {
+  //   this.api.promoExists(this.code_promo.value).subscribe(
+  //     (server_response) => {
+  //       if (server_response == true) {
+  //         this.router.navigate(["/bill"])
+  //         this.cart_bill = this.api.calculateCartBill()
+  //       } else {
+  //         this.api.presentToast("Code promo invalide", 2000, 'bottom')
+  //       }
+  //     }
+  //   )
+  // }
+
   onConfirmerCommande() {
-    this.api.promoExists(this.code_promo.value).subscribe(
-      (server_response) => {
-        if (server_response == true) {
-          this.router.navigate(["/bill"])
-        } else {
-          this.api.presentToast("Code promo invalide", 2000, 'bottom')
-        }
-      }
-    )
+    this.cart_bill = this.api.calculateCartBill()
+    console.log(this.cart_bill)
+    this.router.navigate(["/bill/"+this.cart_bill,])
   }
+
+  makeBill() {
+
+  }
+
+  // makeDiscount(code_promo:string) {
+  //   this.api.getPromobyCode(code_promo).subscribe(
+  //     (promo) => console.log(promo)
+  //   )
+  // }
 
 }

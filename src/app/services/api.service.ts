@@ -20,7 +20,9 @@ export interface CartContent {
 export class ApiService {
 
   private dishes_in_cart:CartContent[] = [];
+  private bill_total:number = 0;
 
+  bill_total_subject = new Subject<number>();
   cart_length_subject = new Subject<number>();
   private dishes_in_cart_subject = new Subject<any[]>();
 
@@ -28,6 +30,10 @@ export class ApiService {
     private http:HttpClient, 
     private config:ConfigService,
     private toastController:ToastController) { }
+
+  emitBillTotal() {
+    this.bill_total_subject.next(this.bill_total)
+  }
 
   emitDishesInCart() {
     this.dishes_in_cart_subject.next(this.dishes_in_cart.slice())
@@ -58,7 +64,8 @@ export class ApiService {
           this.dishes_in_cart.push(received_dish) 
           this.emitDishesInCart()
           this.emitCartLength()
-          this.presentToast("Plat ajouté au panier", 3000, 'bottom')
+          this.emitBillTotal()
+          this.presentToast("Ajouté", 1000, 'middle')
         } else {
           received_dish.qte = dish_qte
           if (this.dishAlreadyInCart(this.dishes_in_cart, received_dish)) {
@@ -69,6 +76,7 @@ export class ApiService {
             this.dishes_in_cart.push(received_dish) 
             this.emitDishesInCart()
             this.emitCartLength()
+            this.emitBillTotal()
           }
         }
       }
@@ -120,7 +128,7 @@ export class ApiService {
     return this.http.get(this.config.getApiHostAddress()+"/code_promo_exists/"+ code_promo)
   }
 
-  async presentToast(message:string, duration:number, pos:any, color:string='primary') {
+  async presentToast(message:string, duration:number, pos:any, color:string='secondary') {
     const toast = await this.toastController.create({
       message: message,
       duration: duration,
@@ -128,6 +136,18 @@ export class ApiService {
       color: color
     });
     toast.present();
+  }
+
+  getPromobyCode(code_promo:string) {
+    return this.http.get(this.config.getApiHostAddress()+"/code_promo/"+code_promo)
+  }
+
+  calculateCartBill() {
+    this.bill_total = 0;
+    this.dishes_in_cart.forEach(dish => {
+      this.bill_total += dish.prix*dish.qte
+    });
+    return this.bill_total
   }
 
 }

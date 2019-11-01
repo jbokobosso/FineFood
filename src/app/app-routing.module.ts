@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   { path: 'auth', loadChildren: './pages/auth/auth.module#AuthPageModule' },
   { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
-  { path: 'bill', loadChildren: './pages/bill/bill.module#BillPageModule' },
+  { path: 'bill/:cart_bill', loadChildren: './pages/bill/bill.module#BillPageModule' },
   { path: 'wallet', loadChildren: './pages/wallet/wallet.module#WalletPageModule' },
   { path: 'bills-history', loadChildren: './pages/bills-history/bills-history.module#BillsHistoryPageModule' }
 ];

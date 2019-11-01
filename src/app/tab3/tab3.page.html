@@ -35,7 +35,7 @@
     </ion-card>
 
   <ion-list>
-    <ion-item (click)="onShowCodePromo()">
+    <!-- <ion-item (click)="onShowCodePromo()">
       <ion-label>J'ai un code promo</ion-label>
       <ion-checkbox slot="start"></ion-checkbox>
     </ion-item>
@@ -43,14 +43,14 @@
     <ion-item *ngIf="codePromo">
       <ion-label>Entrez code promo</ion-label>
       <ion-input [formControl]="code_promo" focused="focused" type="text" placeholder="ICI"></ion-input>
-    </ion-item>
+    </ion-item> -->
     
     <br>
     <ion-button 
       class="ion-text-capitalize" 
       block color="primary"
       (click) = "onConfirmerCommande()">
-      Confirmer commande <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+      Continuer <ion-icon slot="end" name="checkmark-circle"></ion-icon>
     </ion-button>
   </ion-list>
 

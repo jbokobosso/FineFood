@@ -11,24 +11,30 @@
 
 <ion-content>
   <ion-card>
-    <ion-card-content>      
+    <ion-card-content>   
+    
+        <ion-item-divider>
+            <ion-label>Total commande: </ion-label>
+            <ion-item> {{cart_bill}} FF </ion-item>
+        </ion-item-divider>
+              
+        <ion-item (click)="onEatHere()">
+            <ion-label>Je mange sur place</ion-label>
+            <ion-checkbox slot="start"></ion-checkbox>
+        </ion-item>
+
           <form [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
-            <ion-item-group>
+            <ion-item-group *ngIf="deliver">
               <ion-item-divider>
                 <ion-label>Lieu de livraison</ion-label>
               </ion-item-divider>
-              
-              <ion-item (click)="onEatHere()">
-                  <ion-label>Je mange sur place</ion-label>
-                  <ion-checkbox slot="start"></ion-checkbox>
-              </ion-item>
 
-              <ion-item>
+              <ion-item >
                 <ion-label position="floating">Quartier:  <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input formControlName="street" required></ion-input>
               </ion-item>
         
-              <ion-item>
+              <ion-item >
                 <ion-label>Lieu de livraison:  <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input formControlName="deliveryPlace" required></ion-input>
               </ion-item>
@@ -54,6 +60,7 @@
             <ion-button block color="primary" type="submit" [disabled]="deliveryForm.invalid">
               Procéder
             </ion-button>
+            
           </form>
     </ion-card-content>
   </ion-card>

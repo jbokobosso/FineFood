@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Route, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-bill',
@@ -8,6 +9,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class BillPage implements OnInit {
 
+  private cart_bill:number = 0;
+  private deliver:boolean = true;
+
   deliveryForm: FormGroup = new FormGroup({
     street: new FormControl(''),
     deliveryPlace: new FormControl(''),
@@ -15,9 +19,11 @@ export class BillPage implements OnInit {
     transactionNumber: new FormControl('')
   });
 
-  constructor() { }
+  constructor(private route:ActivatedRoute) { }
 
   ngOnInit() {
+    this.cart_bill = parseFloat(this.route.snapshot.paramMap.get("cart_bill"))
+    console.log(this.cart_bill)
   }
 
   onSubmit() {
@@ -25,6 +31,7 @@ export class BillPage implements OnInit {
   }
 
   onEatHere() {
+    this.deliver = !this.deliver;
    if (this.deliveryForm.disabled) {
      this.deliveryForm.enable();
    } else if (!this.deliveryForm.disabled) {
