@@ -1,7 +1,0 @@
-{
-  "appId": "io.ionic.starter",
-  "appName": "FineFood",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
-}
