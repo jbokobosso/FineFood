@@ -9,8 +9,8 @@ import { Route, ActivatedRoute } from '@angular/router';
 })
 export class BillPage implements OnInit {
 
-  private cart_bill:number = 0;
-  private deliver:boolean = true;
+  public cart_bill:number = 0;
+  public deliver:boolean = true;
 
   deliveryForm: FormGroup = new FormGroup({
     street: new FormControl(''),

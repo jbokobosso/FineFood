@@ -1,76 +1,84 @@
 <ion-header>
-  <ion-toolbar color="primary" >
-    <ion-title>
-      Contenu du panier
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content padding *ngIf="!dishesIsEmpty()">
-
-    <ion-card *ngFor="let dish of dishes; let i=index" [attr.data-index]="i">
-      <ion-card-header>
-        <ion-card-title> {{dish.nom}} </ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <ion-item>
-          <ion-label>Prix: </ion-label>
-          <ion-item>{{dish.prix }} CFA</ion-item>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Quantité: </ion-label>
-          <ion-input [value]="dish.qte" type="number"></ion-input>
-        </ion-item>
-
-        <ion-row>
-          <ion-col offset="10"> 
-            <ion-buttons>
-              <ion-button (click)="onDeletePanierElement(i)"> <ion-icon name="trash" color="danger"></ion-icon> </ion-button>
-            </ion-buttons>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    </ion-card>
-
-  <ion-list>
-    <!-- <ion-item (click)="onShowCodePromo()">
-      <ion-label>J'ai un code promo</ion-label>
-      <ion-checkbox slot="start"></ion-checkbox>
-    </ion-item>
-
-    <ion-item *ngIf="codePromo">
-      <ion-label>Entrez code promo</ion-label>
-      <ion-input [formControl]="code_promo" focused="focused" type="text" placeholder="ICI"></ion-input>
-    </ion-item> -->
+    <ion-toolbar color="primary" >
+      <ion-title>
+        Contenu du panier
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding *ngIf="!dishesIsEmpty()">
+      
+    <div id="bg"></div>
+      <div class="bg-content" >
+        <ion-card *ngFor="let dish of dishes; let i=index" [attr.data-index]="i">
+          <ion-card-header>
+            <ion-card-title> {{dish.nom}} </ion-card-title>
+          </ion-card-header>
     
-    <br>
-    <ion-button 
-      class="ion-text-capitalize" 
-      block color="primary"
-      (click) = "onConfirmerCommande()">
-      Continuer <ion-icon slot="end" name="checkmark-circle"></ion-icon>
-    </ion-button>
-  </ion-list>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button routerLink="/wallet" color="secondary" *ngIf="toggled"> <ion-icon name="wallet"></ion-icon> </ion-fab-button>
-      <ion-fab-button routerLink="/signup" color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
-      <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
-      <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
-  </ion-fab> 
-
-</ion-content>
-
-<ion-content padding *ngIf="dishesIsEmpty()">
-  <h1 class="ion-text-center cart-title">Ton panier est vide</h1>
-  <ion-img src="../../assets/images/panier.png"></ion-img>
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button routerLink="/wallet" color="secondary" *ngIf="toggled"> <ion-icon name="wallet"></ion-icon> </ion-fab-button>
-      <ion-fab-button routerLink="/signup" color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
-      <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
-      <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
-  </ion-fab> 
-</ion-content>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>Prix: </ion-label>
+              <ion-item>{{dish.prix }} CFA</ion-item>
+            </ion-item>
+    
+            <ion-item>
+              <ion-label>Quantité: </ion-label>
+              <ion-input [value]="dish.qte" type="number"></ion-input>
+            </ion-item>
+    
+            <ion-row>
+              <ion-col offset="10"> 
+                <ion-buttons>
+                  <ion-button (click)="onDeletePanierElement(i)"> <ion-icon name="trash" color="danger"></ion-icon> </ion-button>
+                </ion-buttons>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </div>
+  
+  
+    <ion-list>
+      <!-- <ion-item (click)="onShowCodePromo()">
+        <ion-label>J'ai un code promo</ion-label>
+        <ion-checkbox slot="start"></ion-checkbox>
+      </ion-item>
+  
+      <ion-item *ngIf="codePromo">
+        <ion-label>Entrez code promo</ion-label>
+        <ion-input [formControl]="code_promo" focused="focused" type="text" placeholder="ICI"></ion-input>
+      </ion-item> -->
+      
+      <br>
+      <ion-button 
+        class="ion-text-capitalize" 
+        block color="primary"
+        (click) = "onConfirmerCommande()">
+        Continuer <ion-icon slot="end" name="checkmark-circle"></ion-icon>
+      </ion-button>
+    </ion-list>
+  
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button routerLink="/wallet" color="secondary" *ngIf="toggled"> <ion-icon name="wallet"></ion-icon> </ion-fab-button>
+        <ion-fab-button routerLink="/signup" color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
+        <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
+        <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
+    </ion-fab> 
+  
+  </ion-content>
+  
+  <ion-content padding *ngIf="dishesIsEmpty()">
+    <div id="bg"></div>
+    <div class="bg-content" >
+      <h1 class="ion-text-center cart-title">Ton panier est vide</h1>
+      <ion-img src="../../assets/images/panier.png"></ion-img>
+    </div>
+  
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button routerLink="/wallet" color="secondary" *ngIf="toggled"> <ion-icon name="wallet"></ion-icon> </ion-fab-button>
+          <ion-fab-button routerLink="/signup" color="secondary" *ngIf="toggled"> <ion-icon name="person-add"></ion-icon> </ion-fab-button>
+          <ion-fab-button routerLink="/auth" routerLinkActive="router-link-active"  color="secondary" *ngIf="toggled"> <ion-icon name="log-in"></ion-icon> </ion-fab-button>
+          <ion-fab-button color="secondary" (click)="onFab()"> <ion-icon [name]="default"></ion-icon> </ion-fab-button>
+      </ion-fab> 
+  </ion-content>
+  
