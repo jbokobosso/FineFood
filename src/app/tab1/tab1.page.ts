@@ -13,14 +13,14 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class Tab1Page implements OnInit {
   
-  private toggled = false;
-  private default = 'add';
-  private dishes_image_address;
-  private panier:number[] = [];
-  private commander:boolean = false;
-  private qte:FormControl;
+  toggled = false;
+  default = 'add';
+  dishes_image_address;
+  panier:number[] = [];
+  commander:boolean = false;
+  qte:FormControl;
 
-  private dishes:Observable<any>;
+  dishes:Observable<any>;
 
   constructor(
     private menu: MenuController, 

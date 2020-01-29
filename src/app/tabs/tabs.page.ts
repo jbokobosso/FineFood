@@ -8,7 +8,7 @@ import { ApiService } from '../services/api.service';
 })
 export class TabsPage implements OnInit {
 
-  private cart_length: number = 0;
+  cart_length: number = 0;
 
   constructor(private api:ApiService) {}
 

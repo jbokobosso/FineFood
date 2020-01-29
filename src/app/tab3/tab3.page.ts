@@ -13,14 +13,14 @@ import { Router } from '@angular/router';
 
 export class Tab3Page implements OnInit {
 
-  private cart_bill:number = 0;
-  private toggled = false;
-  private default = 'add';
-  private dishes_in_cart_indexes:CartContent[] = [];
-  private dishes:any[] = [];
-  private dishes_image_address;
-  private codePromo = false;
-  private code_promo:FormControl;
+   cart_bill:number = 0;
+   toggled = false;
+   default = 'add';
+   dishes_in_cart_indexes:CartContent[] = [];
+   dishes:any[] = [];
+   dishes_image_address;
+   codePromo = false;
+   code_promo:FormControl;
 
 
   constructor(

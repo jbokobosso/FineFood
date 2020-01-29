@@ -12,13 +12,13 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class Tab2Page implements OnInit {
 
-  private toggled = false;
-  private default = 'add';
-  private dishes_s:Subscription;
-  private menu:Observable<any>;
-  private dishes_image_address;
-  private commander:boolean = false;
-  private qte:FormControl;
+  toggled = false;
+  default = 'add';
+  dishes_s:Subscription;
+  menu:Observable<any>;
+  dishes_image_address;
+  commander:boolean = false;
+  qte:FormControl;
 
 
   constructor(private fab_service: FabService, private api:ApiService, private config:ConfigService) {}
