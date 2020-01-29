@@ -19,12 +19,12 @@ export interface CartContent {
 })
 export class ApiService {
 
-  private dishes_in_cart:CartContent[] = [];
-  private bill_total:number = 0;
+  dishes_in_cart:CartContent[] = [];
+  bill_total:number = 0;
 
   bill_total_subject = new Subject<number>();
   cart_length_subject = new Subject<number>();
-  private dishes_in_cart_subject = new Subject<any[]>();
+  dishes_in_cart_subject = new Subject<any[]>();
 
   constructor(
     private http:HttpClient, 

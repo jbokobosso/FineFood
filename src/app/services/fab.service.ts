@@ -5,8 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class FabService {
 
-  private toggled = false;
-  private default = 'add';
+  toggled = false;
+  default = 'add';
 
   constructor() { }
 
