@@ -24,6 +24,11 @@
               <ion-label>Quantité: </ion-label>
               <ion-input [formControl]="qte" focused="focused" type="number" placeholder="x1, x2"></ion-input>
             </ion-item>
+            <div class="error-qte" *ngIf="qte.invalid && (qte.dirty || qte.touched)">
+              <div *ngIf="qte.errors.min">
+                La quantité minimum est "1"
+              </div>
+            </div>
   
             <ion-button 
               *ngIf="commander" 

@@ -65,7 +65,7 @@ export class ApiService {
           this.emitDishesInCart()
           this.emitCartLength()
           this.emitBillTotal()
-          this.presentToast("Ajouté", 1000, 'middle')
+          this.presentToast("Ajouté", 1000, 'bottom')
         } else {
           received_dish.qte = dish_qte
           if (this.dishAlreadyInCart(this.dishes_in_cart, received_dish)) {

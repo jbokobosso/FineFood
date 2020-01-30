@@ -31,7 +31,7 @@ export class Tab2Page implements OnInit {
   }
 
   initForm() {
-    this.qte = new FormControl('', Validators.required)
+    this.qte = new FormControl('', [Validators.required, Validators.min(1)])
   }
 
   onFab() {
@@ -46,8 +46,8 @@ export class Tab2Page implements OnInit {
   
   addToCart(dish_id:number) {
     this.api.addDishToCart(dish_id, this.qte.value)
-    // Change this message into a toast notification saying: "Dish added to cart !!!"
     this.commander = !this.commander
+    this.qte.reset()
   }
   
   onCommander() {

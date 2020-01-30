@@ -20,14 +20,19 @@
               {{dish.description}}
             </p>
             <ion-row>
-              <ion-col pull="-5">
+              <ion-col pull="-3">
                   <ion-button *ngIf="!commander" (click)="onCommander()">Commander <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
               </ion-col>
-              <ion-item *ngIf="commander">
+              <ion-item  *ngIf="commander">
                 <ion-label>Quantité: </ion-label>
-                <ion-input [formControl]="qte" focused="focused" type="number" placeholder="x1, x2"></ion-input>
               </ion-item>
-              <ion-button *ngIf="commander" (click)="addToCart(dish.id)">Valider <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
+              <ion-input [formControl]="qte" focused="focused" type="number" placeholder="x1, x2"></ion-input>
+              <div class="error-qte" *ngIf="qte.invalid && (qte.dirty || qte.touched)">
+                <div *ngIf="qte.errors.min">
+                  La quantité minimum est "1"
+                </div>
+              </div>
+              <ion-button *ngIf="commander" [disabled]="qte.invalid" (click)="addToCart(dish.id)">Valider <ion-icon name="pricetags" slot="end"></ion-icon> </ion-button>
             </ion-row>
           </ion-card-content>
         </ion-card>

@@ -30,14 +30,13 @@ export class Tab1Page implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.getDishesList();
     this.dishes_image_address = this.config.getDishesImageAddress();
-
+    this.getDishesList();
     this.initForm();
   }
 
   initForm() {
-    this.qte = new FormControl('', Validators.required)
+    this.qte = new FormControl('', [Validators.required, Validators.min(1)])
   }
 
   onFab() {
@@ -53,6 +52,7 @@ export class Tab1Page implements OnInit {
   addToCart(dish_id:number) {
     this.api.addDishToCart(dish_id, this.qte.value)
     this.commander = !this.commander
+    this.qte.reset()
   }
   
   onCommander() {
