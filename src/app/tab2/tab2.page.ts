@@ -54,4 +54,8 @@ export class Tab2Page implements OnInit {
     this.commander = !this.commander
   }
 
+  onRefresh() {
+    this.ngOnInit()
+  }
+
 }

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { FabService } from '../services/fab.service';
 import { ApiService } from '../services/api.service';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -23,6 +24,7 @@ export class Tab1Page implements OnInit {
   dishes:Observable<any>;
 
   constructor(
+    private router:Router,
     private menu: MenuController, 
     private fab_service: FabService, 
     private api:ApiService, 
@@ -57,6 +59,10 @@ export class Tab1Page implements OnInit {
   
   onCommander() {
     this.commander = !this.commander
+  }
+
+  onRefresh() {
+    this.ngOnInit()
   }
 
 }

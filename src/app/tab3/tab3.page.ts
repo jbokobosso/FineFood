@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FabService } from '../services/fab.service';
 import { ApiService, CartContent } from '../services/api.service';
 import { ConfigService } from '../services/config.service';

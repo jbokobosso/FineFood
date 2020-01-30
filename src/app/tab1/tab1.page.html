@@ -1,8 +1,14 @@
 <ion-header>
 <ion-toolbar color="primary">
   <ion-title>
-    Au menu aujourd'hui
+    Au menu
   </ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="onRefresh()">
+      <ion-icon slot="start" name="refresh"></ion-icon>
+      Actualiser
+    </ion-button>
+  </ion-buttons>
 </ion-toolbar>
 </ion-header>
 
